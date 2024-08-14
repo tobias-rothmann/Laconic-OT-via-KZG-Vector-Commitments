@@ -123,3 +123,23 @@ D is the vector of choices of Bob i.e. how many messages are being sent and rece
 We just saw how Laconic i.e batched OT can be constructed using the KZG. Bob commits to a vector of his choices _D_ using the KZG. Alice then uses a key encapsulation mechanism based on Bob's commitment to create two keys, with which she encrypts two messages. Bob is bound by the commitment to his choice and can only recompute one of the keys and hence only one message, the message of his choice.
 
 Note that the Laconic OT outlined is a 1-of-2 OT version. However, since the _i_-th choice is committed as the evaluation of the polynomial at _i_, the construction could be just as well extended to a 1-of-n version.
+
+## References
+
+the dicussed paper - https://eprint.iacr.org/2024/264
+
+video to the paper - https://www.youtube.com/watch?v=81Hq7Ij94vE
+
+more resources on __Oblivious Transfer__:
+
+blog post - https://medium.com/partisia-blockchain/what-is-oblivious-transfer-and-why-should-you-care-db40d246ac0
+
+Computerphile video - https://www.youtube.com/watch?v=wE5cl8J27Is
+
+springer link with some further reading - https://link.springer.com/referenceworkentry/10.1007/978-1-4419-5906-5_9
+
+more resources on the __KZG__:
+
+blog post - https://www.zkdocs.com/docs/zkdocs/commitments/kzg_polynomial_commitment/
+
+original paper - https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf
