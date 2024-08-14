@@ -99,17 +99,28 @@ Now let's put everything together!
 
 The basic Laconic OT construction is a simple combination of the two previous sections, the WKEM and the hiding KZG vector commitment scheme. 
 
-Bob commits to a vector of his choices $D\in \{0,1\}^*$, obtaining the KZG commitment C. For each pair of messages $m_0, m_1$ Alice wants to send, she computes the keys depending on C:
+Bob commits to a vector of his choices $D\in \{0,1\}^*$, obtaining the KZG commitment _C_. For each pair of messages $m_0, m_1$ Alice wants to send, she computes the keys, depending on _C_, as the left hand-side of the _VerifyEval_-equation with a random _r_:
 ```math
- k_0:= Encap(SRS, (C, i, 0)) \land k_1:= Encap(SRS, (C, i, 1))
+ k_0:= Encap(SRS, (C, i, 0)) = e(C/g^{0},g^{r_0}) \\ 
+ k_1:= Encap(SRS, (C, i, 1)) = e(C/g^{1},g^{r_1})
 ```
 and computes the according ciphertexts 
 ```math
  ct_0 = Encrypt(m_0, k_0) \land
  ct_1 = Encrypt(m_1, k_1)
 ```
-Now Bob recomputes the key of his choice using the WKEM and can decrypt the according ciphertext to receive the message of his choice. 
-The security follows from the hiding KZG vector commitment scheme and the WKEM. Note particularly that recomputing a key not according to Bob's choice is equivalent to breaking the KZG's binding property. 
+Alice sends the hidden key according _r_ as $(g^\alpha/g^0)^{r_0}$ and $(g^\alpha/g^1)^{r_1}$ to Bob. 
+Now Bob recomputes the key of his choice $b\in{0,1}$ using the WKEM as: 
+```math
+k' := Decap(SRS, \omega, (g^\alpha/g^b)^r) = e(\omega, (g^\alpha/g^b)^r)
+```
+where $\omega$ is the KZG witness from _CreateWitness_ to his choice $b$.
+Using $k'$ Bob can then decrypt the according ciphertext to receive the message of his choice. 
+```math
+m'_b := Decrypt(ct_b, k')
+```
+The security follows from the hiding KZG vector commitment scheme and the WKEM. 
+Note in particular that recomputing the key $k_{1-b}$ not according to Bob's choice is equivalent to breaking the KZG's binding property. 
 
 ## Benchmarks
 The paper provides benchmarks from an open-source implementation which can be found [here](https://github.com/rot256/research-we-kzg).
